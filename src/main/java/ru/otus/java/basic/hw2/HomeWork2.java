@@ -132,15 +132,11 @@ public class HomeWork2 {
     public static void sumArrayHalfElements(int[] arr) {
         int sumLeftHalf = 0;
         int sumRightHalf = 0;
-        boolean isEven = arr.length % 2 == 0;
-        int middle = arr.length / 2;
-        for (int i = 0; i < arr.length; i++) {
-            if (i < middle) {
-                sumLeftHalf += arr[i];
-            }
-            if (i > middle && !isEven || i >= middle && isEven) {
-                sumRightHalf += arr[i];
-            }
+        for (int i = 0; i < arr.length / 2; i++) {
+            sumLeftHalf += arr[i];
+        }
+        for (int i = arr.length - 1; i > ((arr.length - 1) / 2); i--) {
+            sumRightHalf += arr[i];
         }
         if (sumLeftHalf == sumRightHalf) {
             System.out.println("Левая сторона массива равна правой стороне.");
