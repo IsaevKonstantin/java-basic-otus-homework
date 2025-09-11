@@ -61,13 +61,13 @@ public class Main {
                         break;
                     }
                     String lastItem4 = box.getItem();
-                    if (!lastItem4.isEmpty()) {
+                    if (lastItem4 != null) {
                         System.out.println("Не удалось положить предмет в коробку. В коробке уже лежит " + lastItem4 + ".");
                         System.out.println("Сначала освободите коробку.");
                         break;
                     }
-                    String newItem = "";
-                    while (newItem.isEmpty()) {
+                    String newItem = null;
+                    while (newItem == null) {
                         newItem = inputStr("Введите наименование предмета:");
                     }
                     box.setItem(newItem);
@@ -80,7 +80,7 @@ public class Main {
                         break;
                     }
                     String lastItem5 = box.getItem();
-                    if (lastItem5.isEmpty()) {
+                    if (lastItem5 == null) {
                         System.out.println("Не удалось освободить коробку. В коробке уже ничего нет.");
                         System.out.println("Сначала наполлните коробку.");
                         break;
