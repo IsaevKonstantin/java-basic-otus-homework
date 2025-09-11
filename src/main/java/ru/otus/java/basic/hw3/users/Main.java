@@ -19,8 +19,9 @@ public class Main {
     }
 
     private static void printOldUsers(User[] users) {
+        int currentYear = java.time.Year.now().getValue();
         for (User user : users) {
-            if (2025 - user.getYearOfBirth() >= 40) {
+            if (currentYear - user.getYearOfBirth() >= 40) {
                 user.printInfo();
             }
         }
