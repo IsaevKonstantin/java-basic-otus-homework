@@ -46,7 +46,7 @@ public class Box {
         this.width = width;
         this.height = height;
         this.color = "Белая";
-        this.item = "";
+        this.item = null;
         this.isOpen = false;
     }
 
