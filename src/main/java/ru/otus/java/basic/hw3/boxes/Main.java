@@ -33,7 +33,7 @@ public class Main {
                         System.out.println("Нельзя перекрасить коробку в тот же цвет.");
                     } else {
                         box.setColor(newColor);
-                        System.out.println("Коробка перекрашена в " + color + ".");
+                        System.out.println("Коробка перекрашена в " + newColor + ".");
                     }
                     break;
                 case 2:
@@ -85,7 +85,7 @@ public class Main {
                         System.out.println("Сначала наполлните коробку.");
                         break;
                     }
-                    box.setItem("");
+                    box.setItem(null);
                     System.out.println("Вы освободили коробку.");
                     break;
                 case 6:

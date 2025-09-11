@@ -37,7 +37,7 @@ public class Box {
         this.width = width;
         this.height = height;
         this.color = color;
-        this.item = "";
+        this.item = null;
         this.isOpen = false;
     }
 
@@ -54,7 +54,7 @@ public class Box {
         System.out.println("ИНФОРМАЦИЯ О КОРОБКЕ");
         System.out.println("Размеры коробки: " + length + "x" + width + "x" + height + ".");
         System.out.println("Цвет коробки: " + color + ".");
-        System.out.println(!item.isEmpty() ? "В коробке есть предмет: " + item + "." : "В коробке пусто.");
+        System.out.println(item != null ? "В коробке есть предмет: " + item + "." : "В коробке пусто.");
         System.out.println(isOpen ? "Коробка открыта." : "Коробка закрыта.");
     }
 }
