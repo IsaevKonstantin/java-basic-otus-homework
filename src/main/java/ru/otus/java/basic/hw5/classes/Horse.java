@@ -1,6 +1,6 @@
 package ru.otus.java.basic.hw5.classes;
 
-public class Horse extends  Animal {
+public class Horse extends Animal {
     public Horse(String name, int runSpeed, int swimSpeed, int endurance) {
         this.name = name;
         this.runSpeed = runSpeed;

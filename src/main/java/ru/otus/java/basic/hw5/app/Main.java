@@ -55,7 +55,7 @@ public class Main {
                         System.out.println(animalType + " " + animal.getName() + " не умеет бегать.");
                     } else if (runTime == -1) {
                         System.out.println("У " + animalType.toLowerCase() + " " + animal.getName() + " появилось состояние усталости.");
-                    } else  {
+                    } else {
                         System.out.println(animalType + " " + animal.getName() + " пробежал эту дистанцию за: " + runTime + "c.");
                     }
                     break;
@@ -66,7 +66,7 @@ public class Main {
                         System.out.println(animalType + " " + animal.getName() + " не умеет плавать.");
                     } else if (swimTime == -1) {
                         System.out.println("У " + animalType.toLowerCase() + " " + animal.getName() + " появилось состояние усталости.");
-                    } else  {
+                    } else {
                         System.out.println(animalType + " " + animal.getName() + " проплыл эту дистанцию за: " + swimTime + "c.");
                     }
                     break;
