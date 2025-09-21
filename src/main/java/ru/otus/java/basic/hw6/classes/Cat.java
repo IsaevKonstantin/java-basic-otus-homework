@@ -1,9 +1,9 @@
 package ru.otus.java.basic.hw6.classes;
 
 public class Cat {
-    String name;
-    int appetite;
-    boolean isSatiety;
+    private final String name;
+    private final int appetite;
+    private boolean isSatiety;
 
     public int getAppetite() {
         return appetite;
@@ -20,12 +20,11 @@ public class Cat {
     }
 
     public boolean feedTheCat(Plate plate) {
-        boolean isFeeding = plate.reduceFood(appetite);
-        if (!isFeeding) {
-            return false;
+        if (!isSatiety && plate.reduceFood(appetite)) {
+            isSatiety = true;
+            return true;
         }
-        isSatiety = true;
-        return true;
+        return false;
     }
 
     @Override

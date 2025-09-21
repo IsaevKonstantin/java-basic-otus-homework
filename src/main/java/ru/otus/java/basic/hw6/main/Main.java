@@ -26,19 +26,17 @@ public class Main {
             System.out.println();
             System.out.println("Кормим котов:");
             for (Cat cat : cats) {
-                if (cat.isSatiety()) {
+                boolean isFeeding = cat.feedTheCat(plate);
+                if (isFeeding) {
+                    System.out.println(cat + " Теперь еды в тарелке осталось: " + plate.getAmountOfFood() + ".");
+                } else if (cat.isSatiety()) {
                     System.out.println(cat + " Не ест.");
-                } else if (cat.getAppetite() <= plate.getSize()) {
-                    boolean isFeeding = cat.feedTheCat(plate);
-                    if (isFeeding) {
-                        System.out.println(cat.toString().substring(0, cat.toString().length() - 6) + "поел. Еды в тарелке осталось: " + plate.getAmountOfFood() + ".");
-                    } else {
-                        System.out.println(cat);
-                        lackOfFood += cat.getAppetite();
-                        isCatsSatiety = false;
-                    }
-                } else {
+                } else if (cat.getAppetite() > plate.getSize()) {
                     System.out.println(cat + " Но ему не хватит одной тарелки.");
+                } else {
+                    System.out.println(cat);
+                    lackOfFood += cat.getAppetite();
+                    isCatsSatiety = false;
                 }
             }
             if (isCatsSatiety) {
