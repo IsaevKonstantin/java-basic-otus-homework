@@ -18,8 +18,9 @@ public class Plate {
     }
 
     public void addFood(int food) {
-        if (amountOfFood + food <= size && food >= 0) {
-            amountOfFood += food;
+        if (food >= 0) {
+            amountOfFood += Math.min(food, size - amountOfFood);
+            System.out.println("Еда добавлена в тарелку. " + this.toString());
         }
     }
 

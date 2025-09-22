@@ -27,26 +27,18 @@ public class Main {
             System.out.println("Кормим котов:");
             for (Cat cat : cats) {
                 boolean isFeeding = cat.feedTheCat(plate);
-                if (isFeeding) {
-                    System.out.println(cat + " Теперь еды в тарелке осталось: " + plate.getAmountOfFood() + ".");
-                } else if (cat.isSatiety()) {
-                    System.out.println(cat + " Не ест.");
-                } else if (cat.getAppetite() > plate.getSize()) {
-                    System.out.println(cat + " Но ему не хватит одной тарелки.");
-                } else {
-                    System.out.println(cat);
+                if (!isFeeding && cat.isCanEat(plate)) {
                     lackOfFood += cat.getAppetite();
                     isCatsSatiety = false;
                 }
             }
             if (isCatsSatiety) {
                 System.out.println();
-                System.out.println("Всех, кого могли - накормили! Еды в тарелке осталось: " + plate.getAmountOfFood() + ".");
+                System.out.println("Всех, кого могли - накормили! " + plate);
                 break;
             }
             System.out.println("Не все коты накормлены. Для кормления нехватает: " + (lackOfFood - plate.getAmountOfFood()) + ".");
-            plate.addFood(Math.min(lackOfFood - plate.getAmountOfFood(), plate.getSize() - plate.getAmountOfFood()));
-            System.out.println("Еда добавлена в тарелку. " + plate);
+            plate.addFood(lackOfFood - plate.getAmountOfFood());
         }
     }
 }

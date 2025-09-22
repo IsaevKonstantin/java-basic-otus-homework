@@ -9,10 +9,6 @@ public class Cat {
         return appetite;
     }
 
-    public boolean isSatiety() {
-        return isSatiety;
-    }
-
     public Cat(String name, int appetite) {
         this.name = name;
         this.appetite = appetite;
@@ -20,11 +16,26 @@ public class Cat {
     }
 
     public boolean feedTheCat(Plate plate) {
-        if (!isSatiety && plate.reduceFood(appetite)) {
-            isSatiety = true;
-            return true;
+        boolean result;
+        String str = "";
+        if (isSatiety) {
+            str = " Не ест.";
+            result = false;
+        } else {
+            if (plate.reduceFood(appetite)) {
+                isSatiety = true;
+                str = " Теперь еды в тарелке осталось: " + plate.getAmountOfFood() + ".";
+            } else if (appetite > plate.getSize()) {
+                str = " Но ему не хватит одной тарелки.";
+            }
+            result = isSatiety;
         }
-        return false;
+        System.out.println(this.toString() + str);
+        return result;
+    }
+
+    public boolean isCanEat(Plate plate) {
+        return !isSatiety && appetite <= plate.getSize();
     }
 
     @Override
