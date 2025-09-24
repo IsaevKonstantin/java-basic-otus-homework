@@ -3,7 +3,7 @@ package ru.otus.java.basic.hw7.enums;
 import java.util.Arrays;
 
 public enum TerrainType {
-    SWAMP (3, new String[] {"Вездеход"}, "Болото"), DENSE_FOREST (2, new String[] {"Вездеход", "Лошадь", "Велосипед"}, "Густой лес"), FLATLAND (1, new String[] {"Вездеход", "Лошадь", "Велосипед", "Машина"}, "Равнина");
+    SWAMP(3, new String[]{"Вездеход"}, "Болото"), DENSE_FOREST(2, new String[]{"Вездеход", "Лошадь", "Велосипед"}, "Густой лес"), FLATLAND(1, new String[]{"Вездеход", "Лошадь", "Велосипед", "Машина"}, "Равнина");
 
     private final int complexity;
     private final String[] suitableTransport;
