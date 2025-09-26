@@ -1,4 +1,4 @@
-package ru.otus.java.basic.hw7.slasses;
+package ru.otus.java.basic.hw7.classes;
 
 import ru.otus.java.basic.hw7.interfaces.Terrain;
 import ru.otus.java.basic.hw7.interfaces.Transport;
@@ -6,11 +6,11 @@ import ru.otus.java.basic.hw7.interfaces.Transport;
 public class AllTerrainVehicle implements Transport {
     private int benzine;
     private Human driver;
-    static final String type = "Вездеход";
+    public static final String TYPE = "Вездеход";
 
     @Override
     public String getType() {
-        return type;
+        return TYPE;
     }
 
     public AllTerrainVehicle(int benzine) {
@@ -32,7 +32,7 @@ public class AllTerrainVehicle implements Transport {
 
     @Override
     public boolean movement(Terrain terrain) {
-        if (terrain.isNotTransportSuitable(type)) {
+        if (terrain.isNotTransportSuitable(TYPE)) {
             System.out.println("Вездеход не может ехать по: " + terrain.getRusName() + ".");
             return false;
         }

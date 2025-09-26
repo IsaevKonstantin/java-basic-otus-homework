@@ -2,7 +2,7 @@ package ru.otus.java.basic.hw7.main;
 
 import ru.otus.java.basic.hw7.interfaces.Terrain;
 import ru.otus.java.basic.hw7.interfaces.Transport;
-import ru.otus.java.basic.hw7.slasses.*;
+import ru.otus.java.basic.hw7.classes.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -46,10 +46,10 @@ public class Main {
     }
 
     public static boolean isDoneSprint(Terrain terrain, Human human, Transport[] transports) {
-        if (!terrain.doIt(human)) {
+        if (!human.move(terrain)) {
             for (Transport transport : transports) {
                 switchTransport(human, transport);
-                if (terrain.doIt(human)) {
+                if (human.move(terrain)) {
                     human.deleteCurrentTransport();
                     return true;
                 }

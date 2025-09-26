@@ -1,6 +1,6 @@
 package ru.otus.java.basic.hw7.interfaces;
 
-import ru.otus.java.basic.hw7.slasses.Human;
+import ru.otus.java.basic.hw7.classes.Human;
 
 public interface Transport {
     String getType();

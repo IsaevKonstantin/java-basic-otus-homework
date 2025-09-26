@@ -1,9 +1,9 @@
-package ru.otus.java.basic.hw7.slasses;
+package ru.otus.java.basic.hw7.classes;
 
 import ru.otus.java.basic.hw7.enums.TerrainType;
 import ru.otus.java.basic.hw7.interfaces.Terrain;
 
-public class Swamp implements Terrain {
+public class Flatland implements Terrain {
     private final int distance;
     private final TerrainType terrainType;
 
@@ -22,14 +22,9 @@ public class Swamp implements Terrain {
         return terrainType.getRusName();
     }
 
-    public Swamp(int distance) {
+    public Flatland(int distance) {
         this.distance = distance;
-        this.terrainType = TerrainType.SWAMP;
-    }
-
-    @Override
-    public boolean doIt(Human human) {
-        return human.move(this);
+        this.terrainType = TerrainType.FLATLAND;
     }
 
     @Override
@@ -39,6 +34,6 @@ public class Swamp implements Terrain {
 
     @Override
     public String toString() {
-        return "Болото, дистанция: " + distance + ".";
+        return "Равнина, дистанция: " + distance + ".";
     }
 }

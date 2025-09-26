@@ -1,4 +1,4 @@
-package ru.otus.java.basic.hw7.slasses;
+package ru.otus.java.basic.hw7.classes;
 
 import ru.otus.java.basic.hw7.enums.TerrainType;
 import ru.otus.java.basic.hw7.interfaces.Terrain;
@@ -25,11 +25,6 @@ public class DenseForest implements Terrain {
     public DenseForest(int distance) {
         this.distance = distance;
         this.terrainType = TerrainType.DENSE_FOREST;
-    }
-
-    @Override
-    public boolean doIt(Human human) {
-        return human.move(this);
     }
 
     @Override

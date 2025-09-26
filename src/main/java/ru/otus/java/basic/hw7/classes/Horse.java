@@ -1,4 +1,4 @@
-package ru.otus.java.basic.hw7.slasses;
+package ru.otus.java.basic.hw7.classes;
 
 import ru.otus.java.basic.hw7.interfaces.Terrain;
 import ru.otus.java.basic.hw7.interfaces.Transport;
@@ -6,11 +6,11 @@ import ru.otus.java.basic.hw7.interfaces.Transport;
 public class Horse implements Transport {
     private int endurance;
     private Human rider;
-    static final String type = "Лошадь";
+    static final String TYPE = "Лошадь";
 
     @Override
     public String getType() {
-        return type;
+        return TYPE;
     }
 
     public Horse(int endurance) {
@@ -32,7 +32,7 @@ public class Horse implements Transport {
 
     @Override
     public boolean movement(Terrain terrain) {
-        if (terrain.isNotTransportSuitable(type)) {
+        if (terrain.isNotTransportSuitable(TYPE)) {
             System.out.println("Лошадь не может скакать по: " + terrain.getRusName() + ".");
             return false;
         }
