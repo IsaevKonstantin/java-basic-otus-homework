@@ -3,35 +3,28 @@ package ru.otus.java.basic.hw10.classes;
 import java.util.*;
 
 public class PhoneBook {
-    private final Map<String, Contact> phoneBook = new HashMap<>();
-    private final Map<String, String> keyMap = new HashMap<>();
+    private final Map<String, Contact> phoneBookByNumber = new HashMap<>();
+    private final Map<String, List<Contact>> lastNameToContacts = new HashMap<>();
 
     public boolean add(Contact contact) {
-        if (phoneBook.containsValue(contact)) return false;
+        List<Contact> contacts = lastNameToContacts.computeIfAbsent(contact.getLastName(), k -> new ArrayList<>());
+        if (contacts.contains(contact)) return false;
+        contacts.add(contact);
         for (String phoneNumber : contact.getPhoneNumbers()) {
-            phoneBook.putIfAbsent(contact.getLastName() + " " + phoneNumber, contact);
-            keyMap.putIfAbsent(phoneNumber, contact.getLastName());
+            phoneBookByNumber.put(phoneNumber, contact);
         }
         return true;
     }
 
-    public Set<Contact> findByLastName(String lastName) {
-        Set<Contact> contacts = new HashSet<>();
-        if (lastName != null && keyMap.containsValue(lastName)) {
-            for (String phoneNumber : keyMap.keySet()) {
-                if (phoneBook.containsKey(lastName + " " + phoneNumber)) {
-                    contacts.add(phoneBook.get(lastName + " " + phoneNumber));
-                }
-            }
-        }
-        return contacts;
+    public List<Contact> findByLastName(String lastName) {
+        return lastNameToContacts.getOrDefault(lastName, new ArrayList<>());
     }
 
     public Contact findByPhoneNumber(String phoneNumber) {
-        return phoneBook.get(keyMap.get(phoneNumber) + " " + phoneNumber);
+        return phoneBookByNumber.get(phoneNumber);
     }
 
     public boolean containsPhoneNumber(String phoneNumber) {
-        return keyMap.containsKey(phoneNumber);
+        return phoneBookByNumber.containsKey(phoneNumber);
     }
 }

@@ -1,5 +1,6 @@
 package ru.otus.java.basic.hw10.classes;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,7 +15,9 @@ public class Contact {
     }
 
     public List<String> getPhoneNumbers() {
-        return phoneNumbers;
+        List<String> copyPhoneNumbers = new ArrayList<>(phoneNumbers.size());
+        copyPhoneNumbers.addAll(phoneNumbers);
+        return copyPhoneNumbers;
     }
 
     public Contact(String firstName, String lastName, String patronymic, List<String> phoneNumbers) {

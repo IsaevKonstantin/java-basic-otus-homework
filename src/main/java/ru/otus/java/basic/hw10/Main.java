@@ -4,7 +4,6 @@ import ru.otus.java.basic.hw10.classes.Contact;
 import ru.otus.java.basic.hw10.classes.PhoneBook;
 
 import java.util.List;
-import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
@@ -20,36 +19,54 @@ public class Main {
         );
 
         System.out.println();
-        System.out.println("Добавляем новые коннтакты:");
+        addSomeNewContact(contacts, book);
+
+        System.out.println();
+        addNewContact(new Contact("Дмитрий", "Дмитриев", "Артемов", List.of("1234")), book);
+
+        System.out.println();
+        addNewContact(new Contact("Дмитрий", "Дмитриев", "Артемов", List.of("1234")), book);
+
+        System.out.println();
+        searchByLastName("Исаев", book);
+        System.out.println();
+        searchByLastName("Лобанов", book);
+
+        System.out.println();
+        searchByPhoneNumber("7777", book);
+        System.out.println();
+        searchByPhoneNumber("0000", book);
+    }
+
+    private static void searchByPhoneNumber(String phoneNumber, PhoneBook book) {
+        System.out.println("Контакт с номером телефона \"" + phoneNumber + "\":");
+        boolean isContains = book.containsPhoneNumber(phoneNumber);
+        System.out.println(isContains ? " + " + book.findByPhoneNumber(phoneNumber) + "." : " - Контакт не найден!");
+    }
+
+    private static void searchByLastName(String lastName, PhoneBook book) {
+        System.out.println("Список контактов по фамилии \"" + lastName + "\":");
+        List<Contact> findContacts = book.findByLastName(lastName);
+        if (findContacts.isEmpty()) {
+            System.out.println(" - Контакт не найден!");
+            return;
+        }
+        for (Contact contact : findContacts) {
+            System.out.println(" + " + contact + ".");
+        }
+    }
+
+    private static void addNewContact(Contact contact, PhoneBook book) {
+        System.out.println("Добавляем новый контакт:");
+        boolean isAdd = book.add(contact);
+        System.out.println((isAdd ? " + Добавлен: " : " - Ну удалось добавить: ") + contact + ".");
+    }
+
+    private static void addSomeNewContact(List<Contact> contacts, PhoneBook book) {
+        System.out.println("Добавляем новые контакты:");
         for (Contact contact : contacts) {
             boolean isAdd = book.add(contact);
             System.out.println((isAdd ? " + Добавлен: " : " - Ну удалось добавить: ") + contact + ".");
         }
-
-        System.out.println();
-        System.out.println("Попробуем добавить имеющийся контакт:");
-        Contact doubleContact = new Contact("Валерий", "Бондарчук", "Федотов", List.of("5555", "6666"));
-        boolean isAddDouble = book.add(doubleContact);
-        System.out.println((isAddDouble ? " + Добавлен: " : " - Ну удалось добавить: ") + doubleContact + ".");
-
-        String lastName = "Исаев";
-        System.out.println();
-        System.out.println("Список контактов по фамилии \"" + lastName + "\":");
-        Set<Contact> findContacts = book.findByLastName(lastName);
-        for (Contact contact : findContacts) {
-            System.out.println(" * " + contact + ".");
-        }
-
-        String phoneNumber = "7777";
-        System.out.println();
-        System.out.println("Контакт с номером телефона \"" + phoneNumber + "\":");
-        boolean isContains = book.containsPhoneNumber(phoneNumber);
-        System.out.println(isContains ? " * " + book.findByPhoneNumber(phoneNumber) + "." : " * Контакт не найден!");
-
-        String emptyPhoneNumber = "77";
-        System.out.println();
-        System.out.println("Попробуем найти не имеющийся контакт \"" + emptyPhoneNumber + "\":");
-        boolean isEmptyContains = book.containsPhoneNumber(emptyPhoneNumber);
-        System.out.println(isEmptyContains ? " * " + book.findByPhoneNumber(phoneNumber) + "." : " * Контакт не найден!");
     }
 }
