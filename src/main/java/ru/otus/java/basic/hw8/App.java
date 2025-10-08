@@ -47,18 +47,24 @@ public class App {
      */
     private static int sumStringTwoDimensionalArray(String[][] array) throws AppArraySizeException, AppArrayDataException {
         if (array.length != 4) {
-            throw new AppArraySizeException("Неверный размер двумерного массива (" + (array.length > 4 ? "больше" : "меньше") + " 4-х строк)!");
+            throw new AppArraySizeException(
+                    String.format("Неверный размер двумерного массива (%s 4-х строк)!", (array.length > 4 ? "больше" : "меньше"))
+            );
         }
         int sum = 0;
         for (int i = 0; i < array.length; i++) {
             if (array[i].length != 4) {
-                throw new AppArraySizeException("Неверный размер двумерного массива (" + (array[i].length > 4 ? "больше" : "меньше") + " 4-х в строке " + (i + 1) + ")!");
+                throw new AppArraySizeException(
+                        String.format("Неверный размер двумерного массива (%s 4-х в строке %d)!", (array[i].length > 4 ? "больше" : "меньше"), i + 1)
+                );
             }
             for (int j = 0; j < array[i].length; j++) {
                 try {
                     sum += Integer.parseInt(array[i][j]);
                 } catch (NumberFormatException e) {
-                    throw new AppArrayDataException("Невозможно преобразовать строку \"" + array[i][j] + "\" в число. Место исключения: строка " + (i + 1) + ", стобец " + (j + 1) + "!");
+                    throw new AppArrayDataException(
+                            String.format("Невозможно преобразовать строку \"%s\" в число. Место исключения: строка %d, стобец %d!", array[i][j], i + 1, j + 1)
+                    );
                 }
             }
         }
