@@ -25,7 +25,7 @@ public class Main {
         System.out.println(listOfNameByAge);
         System.out.println();
 
-        int minimumAverageAge = 22;
+        int minimumAverageAge = 23;
         System.out.println("Сравнение среднего возраста сотрудников с " + minimumAverageAge + ":");
         boolean isAverageAgeOlder = checkMidlife(listOfEmployee, minimumAverageAge);
         System.out.println("Средний возраст сотрудников " + (isAverageAgeOlder ? "больше " : "меньше ") + minimumAverageAge + ".");
@@ -33,7 +33,7 @@ public class Main {
 
         Employee youngestEmployee = findYoungestEmployee(listOfEmployee);
         System.out.println("Самый молодой сотрудник:");
-        System.out.println(youngestEmployee);
+        System.out.println(youngestEmployee != null ? youngestEmployee : "Сотрудник не найден!");
         System.out.println();
 
         System.out.println("Программа завершена!");
@@ -58,7 +58,7 @@ public class Main {
     }
 
     public static boolean checkMidlife(List<Employee> list, int minimumAverageAge) {
-        int sumEmployeeAge = 0;
+        double sumEmployeeAge = 0;
         for (Employee employee : list) {
             sumEmployeeAge += employee.getAge();
         }
@@ -66,6 +66,7 @@ public class Main {
     }
 
     public static Employee findYoungestEmployee(List<Employee> list) {
+        if (list.isEmpty()) return null;
         Employee youngestEmployee = list.get(0);
         for (Employee employee : list) {
             if (employee.getAge() < youngestEmployee.getAge()) {

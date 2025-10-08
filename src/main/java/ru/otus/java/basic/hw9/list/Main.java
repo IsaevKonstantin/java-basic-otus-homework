@@ -92,12 +92,16 @@ public class Main {
     }
 
     private static List<Integer> replaceAllItemList(int item, List<Integer> list) {
-        list.replaceAll(n -> item);
-        return list;
+        List<Integer> newList = new ArrayList<>(list.size());
+        newList.addAll(list);
+        newList.replaceAll(n -> item);
+        return newList;
     }
 
     private static List<Integer> replaceAllAddItemList(int item, List<Integer> list) {
-        list.replaceAll(n -> n + item);
-        return list;
+        List<Integer> newList = new ArrayList<>(list.size());
+        newList.addAll(list);
+        newList.replaceAll(n -> n + item);
+        return newList;
     }
 }
