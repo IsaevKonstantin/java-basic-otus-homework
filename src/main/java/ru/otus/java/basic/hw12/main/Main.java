@@ -2,38 +2,27 @@ package ru.otus.java.basic.hw12.main;
 
 import ru.otus.java.basic.hw12.dataException.DataException;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        String filePath = "textList.txt";
-        File file = new File(filePath);
         try {
-            List<String> fileNames = readingFileByPath(file);
+            File[] files = getMenuFiles();
 
-            if (fileNames.isEmpty()) {
-                throw new DataException("В файле \"" + file.getName() + "\" - нет данных!");
-            }
+            printMenuFiles(files);
 
-            printFile("Выберете файл для работы:", fileNames, true);
+            File choiceFile = inputChoiceFile(files);
 
-            File choiceFile = new File(inputChoiceFile(fileNames) + ".txt");
+            String stringData = readingChoiceFile(choiceFile);
 
-            List<String> fileData = readingFileByPath(choiceFile);
-
-            printFile("Содержимое файла " + choiceFile.getName() + ":", fileData, false);
+            printFile(choiceFile, stringData);
 
             String inputData = inputValue();
 
-            boolean isWriting = writingDataByFileName(choiceFile, inputData);
+            boolean isWriting = writingIntoChoiceFile(choiceFile, inputData);
 
             if (isWriting) {
                 System.out.println("В файл \"" + choiceFile.getName() + "\" успешно записанны данные: " + inputData + ".");
@@ -47,42 +36,56 @@ public class Main {
         System.out.println("\nКонец программы!");
     }
 
-    private static List<String> readingFileByPath(File file) throws DataException {
-        if (!file.exists()) throw new DataException("Файл \"" + file.getName() + "\" - не существует!");
-        List<String> fileNames = new ArrayList<>();
-        try (FileInputStream fis = new FileInputStream(file);
-             Scanner scanner = new Scanner(fis)) {
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine().trim();
-                if (!line.isEmpty()) {
-                    fileNames.add(line);
-                }
+    private static File[] getMenuFiles() throws DataException {
+        String rootPath = System.getProperty("user.dir");
+        File rootDir = new File(rootPath);
+        File[] textFiles = rootDir.listFiles(((dir, name) -> name.toLowerCase().endsWith(".txt")));
+        if (textFiles == null || textFiles.length == 0) {
+            throw new DataException("Файлы для чтения и записи не найдены...");
+        }
+        return textFiles;
+    }
+
+    private static void printMenuFiles(File[] files) throws DataException {
+        System.out.println("\nВыберете файл для работы:");
+        for (int i = 0; i < files.length; i++) {
+            System.out.println((i + 1) + ". " + files[i].getName());
+        }
+    }
+
+    private static String readingChoiceFile(File choiceFile) throws DataException {
+        if (!choiceFile.exists()) throw new DataException("Файл \"" + choiceFile.getName() + "\" - не существует!");
+
+        StringBuilder data = new StringBuilder();
+        try (InputStreamReader in = new InputStreamReader(new FileInputStream(choiceFile), StandardCharsets.UTF_8)) {
+            int n = in.read();
+            while (n != -1) {
+                data.append((char) n);
+                n = in.read();
             }
         } catch (IOException e) {
-            throw new DataException("Ошибка при чтении файла: " + file.getName() + "!");
+            throw new DataException("Ошибка при чтении файла: " + choiceFile.getName() + "!");
         }
-        return fileNames;
+        return data.toString();
     }
 
-    private static void printFile(String title, List<String> data, boolean isMenu) {
-        System.out.println("\n" + title);
+    private static void printFile(File choiceFile, String data) {
+        System.out.println("\n" + "Содержимое файла " + choiceFile.getName() + ":");
         if (data.isEmpty()) {
-            System.out.println("Данные не найденны...");
+            System.out.println("Данные не найдены...");
             return;
         }
-        for (int i = 0; i < data.size(); i++) {
-            System.out.println(isMenu ? (i + 1) + ". " + data.get(i) : data.get(i));
-        }
+        System.out.println(data);
     }
 
-    private static String inputChoiceFile(List<String> fileNames) throws DataException {
+    private static File inputChoiceFile(File[] files) throws DataException {
         Scanner input = new Scanner(System.in);
         int choice;
         while (true) {
             System.out.println("Введите номер:");
             try {
                 choice = input.nextInt();
-                if (choice >= 1 && choice <= fileNames.size()) {
+                if (choice >= 1 && choice <= files.length) {
                     break;
                 } else {
                     System.out.println("Неверный номер, попробуйте снова.");
@@ -91,7 +94,7 @@ public class Main {
                 throw new DataException("Ошибка при выборе файла!");
             }
         }
-        return fileNames.get(choice - 1);
+        return files[choice - 1];
     }
 
     private static String inputValue() throws DataException {
@@ -104,7 +107,7 @@ public class Main {
         return line;
     }
 
-    private static boolean writingDataByFileName(File file, String data) throws DataException {
+    private static boolean writingIntoChoiceFile(File file, String data) throws DataException {
         if (!file.exists()) throw new DataException("Файл \"" + file.getName() + "\" - не существует!");
         try(FileOutputStream out = new FileOutputStream(file)) {
             byte[] bytes = data.getBytes(StandardCharsets.UTF_8);
