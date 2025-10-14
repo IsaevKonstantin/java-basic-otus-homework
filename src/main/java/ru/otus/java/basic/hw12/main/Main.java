@@ -57,7 +57,8 @@ public class Main {
         if (!choiceFile.exists()) throw new DataException("Файл \"" + choiceFile.getName() + "\" - не существует!");
 
         StringBuilder data = new StringBuilder();
-        try (InputStreamReader in = new InputStreamReader(new FileInputStream(choiceFile), StandardCharsets.UTF_8)) {
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(
+                new FileInputStream(choiceFile), StandardCharsets.UTF_8))) {
             int n = in.read();
             while (n != -1) {
                 data.append((char) n);
@@ -109,11 +110,9 @@ public class Main {
 
     private static boolean writingIntoChoiceFile(File file, String data) throws DataException {
         if (!file.exists()) throw new DataException("Файл \"" + file.getName() + "\" - не существует!");
-        try(FileOutputStream out = new FileOutputStream(file)) {
+        try(BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file))) {
             byte[] bytes = data.getBytes(StandardCharsets.UTF_8);
-            for (byte byteData : bytes) {
-                out.write(byteData);
-            }
+            out.write(bytes);
         } catch (IOException e) {
             throw new DataException("Не удалось внести данные в файл \"" + file.getName() + "\" данные: " + data + ".");
         }
