@@ -15,11 +15,12 @@ public class RunnableCalc implements Runnable {
     public void run() {
         for (int i = start; i < end; i++) {
             array[i] = 1.14 * Math.cos(i) * Math.sin(i * 0.2) * Math.cos(i / 1.2);
+            System.out.println(i + ": " + array[i]); //Время выполнения цикла (2 потока): 35385 мс
         }
     }
 
     public static void main(String[] args) {
-        int size = 100_000_000;
+        int size = 10_000_000;
         double[] array = new double[size];
 
         int numThreads = 2;
@@ -45,7 +46,7 @@ public class RunnableCalc implements Runnable {
         }
 
         long endTime = System.currentTimeMillis();
-        System.out.println("Время выполнения цикла (" + numThreads + " потока): " + (endTime - startTime) + " мс"); //Время выполнения цикла (4 потока): 1167 мс, Время выполнения цикла (2 потока): 2267 мс
+        System.out.println("Время выполнения цикла (" + numThreads + " потока): " + (endTime - startTime) + " мс");
 
     }
 }
