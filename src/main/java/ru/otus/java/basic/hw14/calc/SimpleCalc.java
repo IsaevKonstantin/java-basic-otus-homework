@@ -17,6 +17,6 @@ public class SimpleCalc {
         }
 
         long endTime = System.currentTimeMillis();
-        System.out.println("Время выполнения цикла: " + (endTime - startTime) + " мс"); //Время выполнения цикла: 4446 мс
+        System.out.println("Время выполнения цикла: " + (endTime - startTime) + " мс");
     }
 }
