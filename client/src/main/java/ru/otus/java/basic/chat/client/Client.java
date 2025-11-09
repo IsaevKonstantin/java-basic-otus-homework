@@ -7,9 +7,9 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class Client {
-    private Socket socket;
-    private DataInputStream in;
-    private DataOutputStream out;
+    private final Socket socket;
+    private final DataInputStream in;
+    private final DataOutputStream out;
 
     public Client() {
         Scanner sc = new Scanner(System.in);
@@ -24,6 +24,20 @@ public class Client {
                         if (message.startsWith("/")) {
                             if (message.startsWith("/exitok")) {
                                 break;
+                            }
+                            if (message.startsWith("/authok ")) {
+                                System.out.println("Удалось успешно войти в чат под именем пользователя " +
+                                        message.split(" ")[1]);
+                            }
+                            if (message.startsWith("/regok ")) {
+                                System.out.println("Удалось успешно пройти регистрацию под ником " +
+                                        message.split(" ")[1]);
+                            }
+                            if (message.startsWith("/kickok")) {
+                                System.out.println("Пользователь успешно отключен");
+                            }
+                            if (message.startsWith("/kickerr")) {
+                                System.out.println("Не удалось отключить пользователя!");
                             }
                         } else {
                             System.out.println(message);
