@@ -57,6 +57,7 @@ public class Server {
         for (ClientHandler c : clients) {
             if (c.getUsername().equals(userName) && c.getRole() == Role.USER) {
                 c.sendMsg(ConsoleColors.RED_BOLD + "Вы были отключены администратором!" + ConsoleColors.RESET);
+                c.sendMsg("/exitok");
                 c.disconnect();
                 return true;
             }

@@ -95,7 +95,7 @@ public class ClientHandler {
                         }
                         if (("/kick").equals(token[0])) {
                             try {
-                                if (role == Role.USER) {
+                                if (role != Role.ADMIN) {
                                     sendMsg("Отключать пользователей имеет право только администратор!");
                                 } else if (token[1].equals(username)) {
                                     sendMsg("Невозможно отключить себя!");
