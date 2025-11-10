@@ -1,0 +1,69 @@
+create table tests (
+	id bigserial PRIMARY KEY,
+	question TEXT NOT NULL
+);
+
+insert into tests (question)
+values
+('Что делает команда create table?'),
+('Что делает команда select * from?'),
+('Что делает команда insert into?');
+
+select * from tests;
+
+create table answers (
+	id bigserial PRIMARY KEY,
+	test_id INT NOT NULL REFERENCES tests(id) ON DELETE CASCADE,
+	answer TEXT NOT NULL,
+	is_correct BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+create unique INDEX only_one_correct_answer
+ON answers(test_id)
+WHERE is_correct = TRUE;
+
+insert into answers (test_id, answer, is_correct)
+values
+(1, 'Удаляет таблицу', FALSE),
+(1, 'Создает таблицу', TRUE),
+(1, 'Обновляет таблицу', FALSE),
+(2, 'Выбирает таблицу', FALSE),
+(2, 'Выбирает данные из таблицы', FALSE),
+(2, 'Печатает всю таблицу целиком', TRUE),
+(3, 'Добавляет данные в таблицу', TRUE),
+(3, 'Испускает данные таблицы', FALSE),
+(3, 'Печатает всю таблицу целиком', FALSE);
+
+select * from answers;
+
+insert into answers (test_id, answer, is_correct)
+values
+(1, 'Увеличивает таблицу', TRUE),
+(2, 'Загружает таблицу', TRUE),
+(3, 'Удаляет таблицу', TRUE);
+
+select t.id as "№ Вопроса", t.question as "Вопрос", a.id as "№ Ответа", a.answer as "Ответ", a.is_correct as "Верно?"
+from tests t
+join answers a on t.id = a.test_id;
+
+select t.id as "№ Вопроса", t.question as "Вопрос", a.id as "№ Ответа", a.answer as "Ответ"
+from tests t
+join answers a on t.id = a.test_id;
+
+select is_correct as "Верно?" from answers where test_id = 1 and id = 3;
+
+select is_correct as "Верно?" from answers where test_id = 2 and id = 6;
+
+select t.id as "№ Вопроса", t.question as "Вопрос", a.id as "№ Правильного ответа", a.answer as "Ответ"
+from tests t
+join answers a on t.id = a.test_id
+where a.is_correct = TRUE;
+
+select t.id as "№ Вопроса", a.id as "№ Ответа", a.is_correct as "Верно?"
+from tests t
+join answers a on t.id = a.test_id;
+
+select t.id as "№ Вопроса", a.id as "№ Правильного ответа"
+from tests t
+join answers a on t.id = a.test_id
+where a.is_correct = TRUE;
