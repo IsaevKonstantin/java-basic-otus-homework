@@ -19,13 +19,25 @@ public class Main {
         System.out.println("\nВведите искомую строку: ");
         String target = scanner.nextLine();
 
+        if (target.isEmpty()) {
+            System.out.println("\nИскомая строка не может быть пустой");
+            return;
+        }
+
         int total = 0;
 
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
                 new FileInputStream(myFile), StandardCharsets.UTF_8))) {
+            String prevTail = "";
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                total += countOccurrences(line, target);
+                String combined = prevTail + line;
+                total += countOccurrences(combined, target);
+                if (combined.length() >= target.length() - 1) {
+                    prevTail = combined.substring(combined.length() - (target.length() - 1));
+                } else {
+                    prevTail = combined;
+                }
             }
             System.out.println("\nКоличество вхождений: " + total);
         } catch (IOException e) {
@@ -70,13 +82,11 @@ public class Main {
 
     private static int countOccurrences(String text, String target) {
         int count = 0;
-        int index = 0;
-
-        while ((index = text.indexOf(target, index)) != -1) {
-            count++;
-            index += target.length();
+        for (int i = 0; i <= text.length() - target.length(); i++) {
+            if (text.startsWith(target, i)) {
+                count ++;
+            }
         }
-
         return count;
     }
 }
