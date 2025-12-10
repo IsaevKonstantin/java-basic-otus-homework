@@ -30,7 +30,7 @@ public class HttpServer {
             System.out.println("\nКлиент подключился!");
             byte[] buffer = new byte[8192];
             int n = socket.getInputStream().read(buffer);
-            if (n > 0) {
+            if (n >= 1) {
                 String rawRequest = new String(buffer, 0, n);
                 HttpRequest request = new HttpRequest(rawRequest);
                 DISPATCHER.execute(request, socket.getOutputStream());
