@@ -11,28 +11,27 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class HttpServer {
-    private final int PORT;
-    private final Dispatcher DISPATCHER;
+    private final int port;
+    private final Dispatcher dispatcher;
     private final ExecutorService threadPool;
     private static final Logger logger = LogManager.getLogger(HttpServer.class.getName());
 
     public HttpServer(int PORT) {
-        this.PORT = PORT;
-        this.DISPATCHER = new Dispatcher();
+        this.port = PORT;
+        this.dispatcher = new Dispatcher();
         ItemsStorage.init();
         this.threadPool = Executors.newFixedThreadPool(10);
     }
 
     public void start() {
-        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
-            logger.info(PORT);
+        try (ServerSocket serverSocket = new ServerSocket(port)) {
+            logger.info(port);
             while (true) {
                 Socket socket = serverSocket.accept();
                 threadPool.execute(() -> handleClient(socket));
             }
         } catch (IOException e) {
-            logger.error(e.getMessage());
-            e.printStackTrace();
+            logger.error("Произошла ошибка во время работы сервера", e);
         } finally {
             threadPool.shutdown();
         }
@@ -47,11 +46,10 @@ public class HttpServer {
                 String rawRequest = new String(buffer, 0, n);
                 HttpRequest request = new HttpRequest(rawRequest);
                 request.info();
-                DISPATCHER.execute(request, socket.getOutputStream());
+                dispatcher.execute(request, socket.getOutputStream());
             }
         } catch (IOException e) {
-            logger.error(e.getMessage());
-            e.printStackTrace();
+            logger.error("Произошла ошибка во время обработки запроса клиента", e);
         }
     }
 }
