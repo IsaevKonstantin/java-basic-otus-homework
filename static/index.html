@@ -1,0 +1,74 @@
+<!doctype html>
+
+<html ng-app="app">
+
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<!--        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>-->
+<!--        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>-->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+        <script src="index.js"></script>
+    </head>
+
+    <body>
+        <div class="container" ng-controller="indexController">
+            <h1>Market</h1>
+            <h3>Список товаров</h3>
+            <img src="123.png">
+            <table class="table table-hover" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>Название</td>
+                    <td>Цена</td>
+                    <td></td>
+                </tr>
+                <tbody>
+                <tr ng-repeat="p in ProductsList" ng-click="showItemInfo(p.id)">
+                    <td>{{p.title}}</td>
+                    <td>{{p.price}}</td>
+                    <td>
+                        <button class="btn btn-danger" ng-click="deleteProductById(p.id)">Удалить товар</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h3>Добавить новый товар</h3>
+            <form novalidate ng-submit="submitCreateNewProduct()">
+                <div class="form-group col-md-6">
+                    <label for="newProductTitle">Название</label>
+                    <input class="form-control" type="text" ng-model="newProduct.title" id="newProductTitle">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="newProductPrice">Цена</label>
+                    <input class="form-control" type="number" ng-model="newProduct.price" id="newProductPrice">
+                </div>
+                <div>
+                    <button class="btn btn-success" type="submit">Сохранить</button>
+                </div>
+            </form>
+
+            <div class="modal fade" id="itemInfoModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Информация о товаре</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p><b>ID:</b>{{selectedItem.id}}</p>
+                            <p><b>Название:</b> {{selectedItem.title}}</p>
+                            <p><b>Цена:</b> {{selectedItem.price}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
